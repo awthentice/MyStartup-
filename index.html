@@ -4,234 +4,340 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Startup & Portfolio</title>
   <style>
-    /* ===================== THEME TOKENS ===================== */
-    :root {
-      --bg: #0b0d10;
-      --bg-elev: #12151a;
-      --text: #e6eaf2;
-      --muted: #a8b0be;
-      --stroke: #1f2430;
-      --brand: #4f46e5;
-      --brand-2: #22d3ee;
-      --shadow: 0 12px 40px rgba(0,0,0,.25);
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #0b0d10;
+      color: #e6eaf2;
+      transition: background 0.5s ease, color 0.5s ease;
+      overflow-x: hidden;
     }
-    :root[data-theme="light"] {
-      --bg: #f7f8fb;
-      --bg-elev: #ffffff;
-      --text: #0f172a;
-      --muted: #52607a;
-      --stroke: #e6e9ef;
-      --brand: #4338ca;
-      --brand-2: #0891b2;
-      --shadow: 0 18px 50px rgba(2,6,23,.12);
-    }/* ===================== BASE ===================== */
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  background: var(--bg);
-  color: var(--text);
-  transition: background .5s ease, color .5s ease;
+    header {
+      position: sticky;
+      top: 0;
+      background: #12151a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      z-index: 100;
+    }
+    .title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    /* Dark mode switch */
+    .theme-toggle {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      background: #1f2430;
+      border-radius: 30px;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .toggle-circle {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      background: #ffffff;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: left 0.3s ease, transform 0.4s ease;
+    }
+    .light .toggle-circle {
+      left: 32px;
+      transform: rotate(360deg);
+    }
+    section {
+      padding: 3rem 2rem;
+      text-align: center;
+    }/* Hero section */
+.hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, #1f2430, #0b0d10);
+  color: white;
+  padding: 4rem 2rem;
+  animation: gradientMove 8s ease infinite alternate;
 }
-h1,h2,h3 { margin: 0 0 .75rem 0; }
-p { margin: 0 0 1rem 0; color: var(--muted); }
-a { color: inherit; }
-
-/* ===================== HEADER ===================== */
-header {
-  position: sticky; top: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 22px;
-  background: var(--bg-elev);
-  border-bottom: 1px solid var(--stroke);
-  box-shadow: var(--shadow);
+@keyframes gradientMove {
+  from { background-position: left top; }
+  to { background-position: right bottom; }
 }
-.brand { font-weight: 800; letter-spacing: .3px; }
-
-/* Saklar Lampu (Dark Mode Switch) */
-.switch {
-  --h: 34px; --w: 72px;
-  position: relative; width: var(--w); height: var(--h);
-  border-radius: 999px; border: 1px solid var(--stroke);
-  background: linear-gradient(135deg, #111827, #0b0d10);
-  cursor: pointer; box-shadow: var(--shadow);
-  transition: background .35s ease, border-color .35s ease;
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(-30px);
+  animation: fadeDown 1s forwards;
+}
+.hero p {
+  max-width: 600px;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1.5s forwards;
+  animation-delay: 0.3s;
+}
+.hero .typing {
+  border-right: 2px solid #25d366;
+  display: inline-block;
+  white-space: nowrap;
   overflow: hidden;
+  animation: typing 4s steps(30, end), blink 0.8s step-end infinite;
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  color: #25d366;
 }
-:root[data-theme="light"] .switch {
-  background: linear-gradient(135deg, #eef2ff, #ffffff);
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
 }
-.knob {
-  position: absolute; top: 3px; left: 3px;
-  width: calc(var(--h) - 6px); height: calc(var(--h) - 6px);
-  background: var(--bg);
-  border: 1px solid var(--stroke);
-  border-radius: 50%; display: grid; place-items: center;
-  transition: left .35s ease, transform .35s ease, background .35s ease;
-  font-size: 15px;
+@keyframes blink {
+  from, to { border-color: transparent; }
+  50% { border-color: #25d366; }
 }
-:root[data-theme="light"] .knob { left: calc(var(--w) - var(--h) + 3px); }
-.knob.spin { transform: rotate(360deg); }
+.hero .cta {
+  background: #25d366;
+  color: white;
+  padding: 0.9rem 2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  opacity: 0;
+  transform: scale(0.8);
+  animation: popIn 1s forwards;
+  animation-delay: 0.8s;
+}
+@keyframes fadeDown {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes popIn {
+  to { opacity: 1; transform: scale(1); }
+}
 
-/* Flash effect saat saklar dipencet */
-.flash {
-  pointer-events: none;
-  position: fixed; inset: 0; background: radial-gradient(ellipse at center, rgba(255,255,255,.75), rgba(255,255,255,0) 60%);
-  opacity: 0; transition: opacity .35s ease; z-index: 90;
-}
-.flash.show { opacity: .6; }
-
-/* ===================== LAYOUT ===================== */
-main { padding: 28px 20px 40px; max-width: 1100px; margin: 0 auto; }
-.section { margin-bottom: 36px; }
-
-/* ABOUT (foto profil kiri, teks kanan) */
+/* About */
 .about {
-  display: grid; grid-template-columns: 160px 1fr; gap: 22px; align-items: center;
-  background: var(--bg-elev); border: 1px solid var(--stroke);
-  border-radius: 16px; padding: 22px; box-shadow: var(--shadow);
-  opacity: 0; transform: translateY(20px) scale(.98); transition: opacity .6s ease, transform .6s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.8s ease;
 }
-.about.visible { opacity: 1; transform: translateY(0) scale(1); }
-.avatar {
-  width: 160px; height: 160px; border-radius: 50%; object-fit: cover;
-  border: 4px solid var(--brand); box-shadow: var(--shadow);
-  transition: transform .35s ease;
+.about.visible {
+  opacity: 1;
+  transform: scale(1);
 }
-.avatar:hover { transform: scale(1.04) rotate(1.5deg); }
+.about img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+  transition: transform 0.5s ease;
+}
+.about img:hover {
+  transform: scale(1.1) rotate(3deg);
+}
+.about-text {
+  max-width: 500px;
+  text-align: left;
+}
 
-/* SKILLS: gaya card/class kecil */
-.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 14px; }
+/* Skills */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
 .skill-card {
-  background: var(--bg-elev); border: 1px solid var(--stroke); border-radius: 14px;
-  padding: 14px; text-align: center; box-shadow: var(--shadow);
-  transform: translateY(24px); opacity: 0; transition: transform .6s ease, opacity .6s ease, background .3s ease;
+  background: #12151a;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, background 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
 }
-.skill-card.visible { transform: translateY(0); opacity: 1; }
-.skill-card:hover { background: linear-gradient(180deg, var(--bg-elev), rgba(79,70,229,.15)); }
-.skill-emoji { font-size: 22px; display: block; margin-bottom: 6px; transition: transform .3s ease; }
-.skill-card:hover .skill-emoji { transform: translateY(-3px) rotate(-8deg) scale(1.05); }
+.skill-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.6s ease;
+}
+.skill-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  background: #1f2430;
+}
+.skill-emoji {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  transition: transform 0.3s ease;
+}
+.skill-card:hover .skill-emoji {
+  transform: rotate(-10deg) scale(1.2);
+}
 
-/* PROJECTS: 2 kartu gaya class dengan animasi */
-.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 18px; }
+/* Projects */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
 .project-card {
-  background: var(--bg-elev); border: 1px solid var(--stroke); border-radius: 16px; overflow: hidden;
-  box-shadow: var(--shadow); transform: translateY(26px) scale(.98); opacity: 0; transition: transform .7s cubic-bezier(.2,.8,.2,1), opacity .7s ease;
+  background: #12151a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 0.6s ease;
 }
-.project-card.visible { transform: translateY(0) scale(1); opacity: 1; }
-.project-media { width: 100%; height: 180px; object-fit: cover; display: block; }
-.project-body { padding: 14px 16px 18px; }
-.project-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 6px; }
-.project-desc { color: var(--muted); }
-.project-card:hover { transform: translateY(-4px) scale(1.01); }
-
-/* CONTACT */
-.wa-btn {
-  display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px;
-  background: #25D366; color: white; text-decoration: none; font-weight: 700; border: 0;
-  box-shadow: var(--shadow); transition: transform .25s ease;
+.project-card.visible {
+  transform: translateY(0);
+  opacity: 1;
 }
-.wa-btn:hover { transform: translateY(-2px) scale(1.03); }
+.project-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.project-card .content {
+  padding: 1rem;
+  text-align: left;
+}
+.project-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
 
-/* Utilities */
-.subtle { color: var(--muted); font-size: .95rem; }
+/* Contact */
+.whatsapp-btn {
+  background: #25d366;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.whatsapp-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #12151a;
+  margin-top: 2rem;
+}
 
   </style>
 </head>
 <body>
-  <div class="flash" id="flash"></div>
   <header>
-    <div class="brand">My Startup & Portfolio</div>
-    <button id="themeSwitch" class="switch" aria-label="Toggle theme (saklar lampu)">
-      <div class="knob" id="knob">🌙</div>
-    </button>
-  </header>  <main>
-    <!-- ABOUT -->
-    <section class="section">
-      <div class="about" data-reveal>
-        <img class="avatar" src="https://via.placeholder.com/200" alt="Foto Profil" />
-        <div>
-          <h2>Tentang Saya</h2>
-          <p class="subtle">Saya membantu UMKM & startup membangun website modern yang cepat, aman, dan SEO-friendly. Fokus pada stack ringan: 📄 HTML, 🎨 CSS, ⚡ JavaScript, ⚛️ React, 🌿 Node.js, 🐘 PostgreSQL.</p>
+    <div class="title">My Startup & Portfolio</div>
+    <div id="themeToggle" class="theme-toggle">
+      <div class="toggle-circle" id="themeIcon">🌙</div>
+    </div>
+  </header>  <!-- Hero Section -->  <section class="hero">
+    <h1>Buat Website Modern untuk Bisnis Anda 🚀</h1>
+    <div class="typing">Cepat ⚡ | Aman 🔒 | Responsif 📱</div>
+    <p>Saya membantu UMKM & startup punya website profesional, cepat, dan aman dengan biaya terjangkau & hosting gratis di GitHub Pages.</p>
+    <a href="https://wa.me/6281234567890" class="cta">💬 Buat Website Sekarang</a>
+  </section>  <!-- About Section -->  <section class="about" id="aboutSection">
+    <img src="https://via.placeholder.com/150" alt="Foto Profil">
+    <div class="about-text">
+      <h2>Tentang Saya</h2>
+      <p>Saya adalah web developer yang fokus pada pembuatan website modern, cepat, dan responsif. Menggunakan teknologi terkini untuk memastikan website terlihat menarik dan berjalan optimal di semua perangkat.</p>
+    </div>
+  </section>  <!-- Skills -->  <section>
+    <h2>Keahlian</h2>
+    <div class="skills">
+      <div class="skill-card"><span class="skill-emoji">📄</span>HTML</div>
+      <div class="skill-card"><span class="skill-emoji">🎨</span>CSS</div>
+      <div class="skill-card"><span class="skill-emoji">⚡</span>JavaScript</div>
+      <div class="skill-card"><span class="skill-emoji">⚛️</span>React</div>
+      <div class="skill-card"><span class="skill-emoji">🌿</span>Node.js</div>
+      <div class="skill-card"><span class="skill-emoji">🐘</span>PostgreSQL</div>
+    </div>
+  </section>  <!-- Projects -->  <section>
+    <h2>Proyek</h2>
+    <div class="projects">
+      <div class="project-card">
+        <img src="https://via.placeholder.com/400x180" alt="Proyek 1">
+        <div class="content">
+          <h3>Proyek Website UMKM</h3>
+          <p>Website modern untuk UMKM agar produk lebih dikenal luas dan mudah ditemukan online.</p>
         </div>
       </div>
-    </section><!-- SKILLS -->
-<section class="section">
-  <h2>Keahlian</h2>
-  <div class="skills-grid">
-    <div class="skill-card" data-reveal><span class="skill-emoji">📄</span>HTML</div>
-    <div class="skill-card" data-reveal><span class="skill-emoji">🎨</span>CSS</div>
-    <div class="skill-card" data-reveal><span class="skill-emoji">⚡</span>JavaScript</div>
-    <div class="skill-card" data-reveal><span class="skill-emoji">⚛️</span>React</div>
-    <div class="skill-card" data-reveal><span class="skill-emoji">🌿</span>Node.js</div>
-    <div class="skill-card" data-reveal><span class="skill-emoji">🐘</span>PostgreSQL</div>
-  </div>
-</section>
-
-<!-- PROJECTS (2 proyek gaya class) -->
-<section class="section">
-  <h2>Proyek Terpilih</h2>
-  <div class="projects-grid">
-    <article class="project-card" data-reveal>
-      <img class="project-media" src="https://images.unsplash.com/photo-1551281044-8d8e8422c734?q=80&w=1200&auto=format&fit=crop" alt="SaaS Analytics Dashboard" />
-      <div class="project-body">
-        <div class="project-title">SaaS Analytics Dashboard</div>
-        <p class="project-desc">Dashboard analitik dengan grafik interaktif, login multi-tenant, dan export laporan. Dibangun dengan React + Node.js + PostgreSQL.</p>
+      <div class="project-card">
+        <img src="https://via.placeholder.com/400x180" alt="Proyek 2">
+        <div class="content">
+          <h3>Proyek Portfolio Startup</h3>
+          <p>Portfolio elegan untuk startup, menampilkan produk & layanan dengan desain profesional.</p>
+        </div>
       </div>
-    </article>
-    <article class="project-card" data-reveal>
-      <img class="project-media" src="https://images.unsplash.com/photo-1515165562835-c3b8c1b4a9d7?q=80&w=1200&auto=format&fit=crop" alt="Headless eCommerce" />
-      <div class="project-body">
-        <div class="project-title">Headless eCommerce</div>
-        <p class="project-desc">Toko online cepat dengan checkout Stripe, CMS headless, dan optimasi gambar otomatis. Dibangun dengan Next.js & API terpisah.</p>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="section">
-  <h2>Hubungi Saya</h2>
-  <a class="wa-btn" target="_blank" href="https://wa.me/6282124643404?text=Halo!%20Saya%20tertarik%20dengan%20jasa%20Anda.">💬 WhatsApp</a>
-</section>
-
-  </main>  <footer class="section" style="text-align:center; border-top:1px solid var(--stroke); padding-top:22px;">
-    © 2025 All Rights Reserved
-  </footer>  <script>
-    // ===================== THEME (SAKLAR LAMPU) =====================
+    </div>
+  </section>  <!-- Contact -->  <section>
+    <h2>Hubungi Saya</h2>
+    <a href="https://wa.me/6282124643404" class="whatsapp-btn">💬 WhatsApp</a>
+  </section>  <footer>© 2025 My Startup. All Rights Reserved.</footer>  <script>
+    // Dark mode toggle
     const root = document.documentElement;
-    const switchEl = document.getElementById('themeSwitch');
-    const knob = document.getElementById('knob');
-    const flash = document.getElementById('flash');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
 
-    // load theme
-    const saved = localStorage.getItem('theme') || 'dark';
-    root.setAttribute('data-theme', saved);
-    knob.textContent = saved === 'light' ? '🌞' : '🌙';
+    if(localStorage.getItem('theme') === 'light') root.classList.add('light');
+    updateThemeIcon();
 
-    function flick() {
-      flash.classList.add('show');
-      setTimeout(()=> flash.classList.remove('show'), 220);
-    }
-
-    switchEl.addEventListener('click', () => {
-      // saklar animasi
-      knob.classList.add('spin');
-      setTimeout(()=> knob.classList.remove('spin'), 360);
-      flick();
-
-      const isLight = root.getAttribute('data-theme') === 'light';
-      const next = isLight ? 'dark' : 'light';
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      knob.textContent = next === 'light' ? '🌞' : '🌙';
+    themeToggle.addEventListener('click', () => {
+      root.classList.toggle('light');
+      localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
+      updateThemeIcon();
+      document.body.style.transition = 'background 0.5s';
     });
 
-    // ===================== SCROLL REVEAL =====================
-    const revealEls = document.querySelectorAll('[data-reveal], .about, .skill-card, .project-card');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.18 });
-    revealEls.forEach(el => io.observe(el));
+    function updateThemeIcon(){
+      themeIcon.textContent = root.classList.contains('light') ? '🌞' : '🌙';
+    }
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {threshold: 0.2});
+
+    document.querySelectorAll('.skill-card, #aboutSection, .project-card').forEach(el => observer.observe(el));
   </script></body>
 </html>
