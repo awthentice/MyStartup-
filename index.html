@@ -1,343 +1,138 @@
 <!DOCTYPE html><html lang="id">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Startup & Portfolio</title>
+  <title>My Startup</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #0b0d10;
-      color: #e6eaf2;
-      transition: background 0.5s ease, color 0.5s ease;
-      overflow-x: hidden;
-    }
-    header {
-      position: sticky;
-      top: 0;
-      background: #12151a;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      z-index: 100;
-    }
-    .title {
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-    /* Dark mode switch */
-    .theme-toggle {
-      position: relative;
-      width: 60px;
-      height: 30px;
-      background: #1f2430;
-      border-radius: 30px;
-      cursor: pointer;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-    }
-    .toggle-circle {
-      position: absolute;
-      width: 26px;
-      height: 26px;
-      background: #ffffff;
-      border-radius: 50%;
-      top: 2px;
-      left: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      transition: left 0.3s ease, transform 0.4s ease;
-    }
-    .light .toggle-circle {
-      left: 32px;
-      transform: rotate(360deg);
-    }
-    section {
-      padding: 3rem 2rem;
-      text-align: center;
-    }/* Hero section */
-.hero {
-  min-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: linear-gradient(135deg, #1f2430, #0b0d10);
-  color: white;
-  padding: 4rem 2rem;
-  animation: gradientMove 8s ease infinite alternate;
-}
-@keyframes gradientMove {
-  from { background-position: left top; }
-  to { background-position: right bottom; }
-}
-.hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  opacity: 0;
-  transform: translateY(-30px);
-  animation: fadeDown 1s forwards;
-}
-.hero p {
-  max-width: 600px;
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp 1.5s forwards;
-  animation-delay: 0.3s;
-}
-.hero .typing {
-  border-right: 2px solid #25d366;
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  animation: typing 4s steps(30, end), blink 0.8s step-end infinite;
-  font-weight: bold;
-  font-size: 1.3rem;
-  margin-bottom: 2rem;
-  color: #25d366;
-}
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
-}
-@keyframes blink {
-  from, to { border-color: transparent; }
-  50% { border-color: #25d366; }
-}
-.hero .cta {
-  background: #25d366;
-  color: white;
-  padding: 0.9rem 2rem;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  opacity: 0;
-  transform: scale(0.8);
-  animation: popIn 1s forwards;
-  animation-delay: 0.8s;
-}
-@keyframes fadeDown {
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes popIn {
-  to { opacity: 1; transform: scale(1); }
-}
+    /* Reset */
+    * {margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth;}
+    body {font-family: 'Segoe UI', sans-serif; background:#f5f5f5; color:#333; transition:background 0.5s, color 0.5s;}
+    a {text-decoration:none; color:inherit;}/* Header */
+header {position:sticky; top:0; z-index:1000; background:#fff; display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; box-shadow:0 2px 8px rgba(0,0,0,0.1); transition:background 0.5s, color 0.5s;}
+header h1 {font-size:1.5rem; font-weight:700;}
 
-/* About */
-.about {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  opacity: 0;
-  transform: scale(0.9);
-  transition: all 0.8s ease;
-}
-.about.visible {
-  opacity: 1;
-  transform: scale(1);
-}
-.about img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-  transition: transform 0.5s ease;
-}
-.about img:hover {
-  transform: scale(1.1) rotate(3deg);
-}
-.about-text {
-  max-width: 500px;
-  text-align: left;
-}
+/* Dark mode toggle */
+.switch {position:relative; display:inline-block; width:60px; height:30px;}
+.switch input {display:none;}
+.slider {position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#ccc; transition:.4s; border-radius:30px;}
+.slider:before {position:absolute; content:"☀️"; height:24px; width:24px; left:3px; bottom:3px; background:white; border-radius:50%; transition:.4s; display:flex; align-items:center; justify-content:center; font-size:14px;}
+input:checked + .slider {background:#444;}
+input:checked + .slider:before {transform:translateX(30px) rotate(360deg); content:"🌙";}
+
+/* Hero */
+.hero {height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:2rem; background:linear-gradient(-45deg,#7f5af0,#2cb67d,#0ea5e9,#ff5f9e); background-size:400% 400%; animation:gradient 12s ease infinite; color:white;}
+@keyframes gradient {0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}}
+.hero h2 {font-size:2.5rem; margin-bottom:1rem;}
+.hero p {font-size:1.2rem; margin-bottom:1.5rem;}
+.hero .cta {padding:0.8rem 1.6rem; background:white; color:#333; border-radius:50px; font-weight:bold; transition:transform .3s, background .3s;}
+.hero .cta:hover {transform:scale(1.1); background:#eee;}
+.typing {border-right:2px solid white; white-space:nowrap; overflow:hidden; animation:typing 4s steps(30,end) infinite alternate, blink .75s step-end infinite;}
+@keyframes typing {from {width:0} to {width:100%}}
+@keyframes blink {50% {border-color:transparent}}
+
+/* Profile */
+.profile {display:flex; flex-direction:column; align-items:center; padding:3rem 2rem;}
+.profile img {width:150px; height:150px; border-radius:50%; object-fit:cover; box-shadow:0 4px 12px rgba(0,0,0,0.2); transition:transform .3s;}
+.profile img:hover {transform:scale(1.1) rotate(5deg);}
+.about {max-width:600px; text-align:center; margin-top:1.5rem;}
 
 /* Skills */
-.skills {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
-  margin-top: 2rem;
-}
-.skill-card {
-  background: #12151a;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  transition: transform 0.3s ease, background 0.3s ease;
-  opacity: 0;
-  transform: translateY(30px);
-}
-.skill-card.visible {
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.6s ease;
-}
-.skill-card:hover {
-  transform: translateY(-8px) scale(1.03);
-  background: #1f2430;
-}
-.skill-emoji {
-  font-size: 1.5rem;
-  display: block;
-  margin-bottom: 0.5rem;
-  transition: transform 0.3s ease;
-}
-.skill-card:hover .skill-emoji {
-  transform: rotate(-10deg) scale(1.2);
-}
+.skills {padding:3rem 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:1rem;}
+.skill {background:white; padding:1rem; border-radius:12px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1); transition:transform .3s, box-shadow .3s;}
+.skill:hover {transform:translateY(-5px); box-shadow:0 8px 20px rgba(0,0,0,0.15);}
+.skill span {font-size:1.5rem; display:block; margin-bottom:0.5rem;}
 
 /* Projects */
-.projects {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-.project-card {
-  background: #12151a;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  transform: translateY(30px);
-  opacity: 0;
-  transition: all 0.6s ease;
-}
-.project-card.visible {
-  transform: translateY(0);
-  opacity: 1;
-}
-.project-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-.project-card .content {
-  padding: 1rem;
-  text-align: left;
-}
-.project-card:hover {
-  transform: translateY(-8px) scale(1.02);
-}
+.projects {padding:3rem 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem;}
+.project {background:white; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1); transform:translateY(40px); opacity:0; transition:transform 1s ease, opacity 1s ease;}
+.project.visible {transform:translateY(0); opacity:1;}
+.project img {width:100%; height:180px; object-fit:cover;}
+.project .desc {padding:1rem;}
 
 /* Contact */
-.whatsapp-btn {
-  background: #25d366;
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border-radius: 30px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  text-decoration: none;
-  font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.whatsapp-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-}
+.contact {padding:3rem 2rem; text-align:center;}
+.wa-btn {padding:1rem 2rem; background:#25d366; color:white; font-weight:bold; border-radius:50px; display:inline-flex; align-items:center; gap:0.5rem; transition:transform .3s, box-shadow .3s;}
+.wa-btn:hover {transform:scale(1.1); box-shadow:0 6px 20px rgba(37,211,102,0.5);}
 
-footer {
-  text-align: center;
-  padding: 1rem;
-  background: #12151a;
-  margin-top: 2rem;
+/* Footer */
+footer {padding:1.5rem; text-align:center; background:#111; color:white;}
+
+/* Dark Mode */
+body.dark {background:#121212; color:#eee;}
+body.dark header {background:#1e1e1e; color:#eee;}
+body.dark .skill {background:#1e1e1e; color:#eee;}
+body.dark .project {background:#1e1e1e; color:#eee;}
+body.dark .about {color:#eee;}
+
+@media(max-width:768px){
+  .hero h2 {font-size:2rem;}
+  .profile img {width:120px; height:120px;}
 }
 
   </style>
 </head>
 <body>
   <header>
-    <div class="title">My Startup & Portfolio</div>
-    <div id="themeToggle" class="theme-toggle">
-      <div class="toggle-circle" id="themeIcon">🌙</div>
-    </div>
-  </header>  <!-- Hero Section -->  <section class="hero">
-    <h1>Buat Website Modern untuk Bisnis Anda 🚀</h1>
-    <div class="typing">Cepat ⚡ | Aman 🔒 | Responsif 📱</div>
-    <p>Saya membantu UMKM & startup punya website profesional, cepat, dan aman dengan biaya terjangkau & hosting gratis di GitHub Pages.</p>
-    <a href="https://wa.me/6281234567890" class="cta">💬 Buat Website Sekarang</a>
-  </section>  <!-- About Section -->  <section class="about" id="aboutSection">
+    <h1>My Startup</h1>
+    <label class="switch">
+      <input type="checkbox" id="darkToggle">
+      <span class="slider"></span>
+    </label>
+  </header>  <!-- Hero -->  <section class="hero">
+    <h2 class="typing">Bangun Website Modern & Profesional 🚀</h2>
+    <p>Kami membantu bisnis Anda tampil online lebih cepat, responsif, dan elegan.</p>
+    <a href="#contact" class="cta">Buat Website Sekarang</a>
+  </section>  <!-- Profile -->  <section class="profile" id="about">
     <img src="https://via.placeholder.com/150" alt="Foto Profil">
-    <div class="about-text">
+    <div class="about">
       <h2>Tentang Saya</h2>
-      <p>Saya adalah web developer yang fokus pada pembuatan website modern, cepat, dan responsif. Menggunakan teknologi terkini untuk memastikan website terlihat menarik dan berjalan optimal di semua perangkat.</p>
+      <p>Saya seorang Web Developer yang fokus membangun website modern, responsif, dan menarik dengan teknologi terbaru.</p>
     </div>
-  </section>  <!-- Skills -->  <section>
-    <h2>Keahlian</h2>
-    <div class="skills">
-      <div class="skill-card"><span class="skill-emoji">📄</span>HTML</div>
-      <div class="skill-card"><span class="skill-emoji">🎨</span>CSS</div>
-      <div class="skill-card"><span class="skill-emoji">⚡</span>JavaScript</div>
-      <div class="skill-card"><span class="skill-emoji">⚛️</span>React</div>
-      <div class="skill-card"><span class="skill-emoji">🌿</span>Node.js</div>
-      <div class="skill-card"><span class="skill-emoji">🐘</span>PostgreSQL</div>
-    </div>
-  </section>  <!-- Projects -->  <section>
-    <h2>Proyek</h2>
-    <div class="projects">
-      <div class="project-card">
-        <img src="https://via.placeholder.com/400x180" alt="Proyek 1">
-        <div class="content">
-          <h3>Proyek Website UMKM</h3>
-          <p>Website modern untuk UMKM agar produk lebih dikenal luas dan mudah ditemukan online.</p>
-        </div>
-      </div>
-      <div class="project-card">
-        <img src="https://via.placeholder.com/400x180" alt="Proyek 2">
-        <div class="content">
-          <h3>Proyek Portfolio Startup</h3>
-          <p>Portfolio elegan untuk startup, menampilkan produk & layanan dengan desain profesional.</p>
-        </div>
+  </section>  <!-- Skills -->  <section class="skills" id="skills">
+    <div class="skill"><span>📄</span>HTML</div>
+    <div class="skill"><span>🎨</span>CSS</div>
+    <div class="skill"><span>⚡</span>JavaScript</div>
+    <div class="skill"><span>⚛️</span>React</div>
+    <div class="skill"><span>🌿</span>Node.js</div>
+    <div class="skill"><span>🐘</span>PostgreSQL</div>
+  </section>  <!-- Projects -->  <section class="projects" id="projects">
+    <div class="project">
+      <img src="https://via.placeholder.com/600x400" alt="Proyek 1">
+      <div class="desc">
+        <h3>Proyek 1</h3>
+        <p>Website dashboard analytics modern dengan data interaktif.</p>
       </div>
     </div>
-  </section>  <!-- Contact -->  <section>
+    <div class="project">
+      <img src="https://via.placeholder.com/600x400" alt="Proyek 2">
+      <div class="desc">
+        <h3>Proyek 2</h3>
+        <p>Website e-commerce responsif dengan integrasi pembayaran.</p>
+      </div>
+    </div>
+  </section>  <!-- Contact -->  <section class="contact" id="contact">
     <h2>Hubungi Saya</h2>
-    <a href="https://wa.me/6282124643404" class="whatsapp-btn">💬 WhatsApp</a>
-  </section>  <footer>© 2025 My Startup. All Rights Reserved.</footer>  <script>
-    // Dark mode toggle
-    const root = document.documentElement;
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-
-    if(localStorage.getItem('theme') === 'light') root.classList.add('light');
-    updateThemeIcon();
-
-    themeToggle.addEventListener('click', () => {
-      root.classList.toggle('light');
-      localStorage.setItem('theme', root.classList.contains('light') ? 'light' : 'dark');
-      updateThemeIcon();
-      document.body.style.transition = 'background 0.5s';
+    <a href="https://wa.me/6282124643404" target="_blank" class="wa-btn">💬 Chat via WhatsApp</a>
+  </section>  <!-- Footer -->  <footer>
+    © 2025 All Rights Reserved
+  </footer>  <script>
+    // Dark Mode Toggle
+    const toggle = document.getElementById('darkToggle');
+    toggle.addEventListener('change', ()=>{
+      document.body.classList.toggle('dark');
     });
 
-    function updateThemeIcon(){
-      themeIcon.textContent = root.classList.contains('light') ? '🌞' : '🌙';
-    }
-
-    // Scroll reveal
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
+    // Scroll Reveal for Projects
+    const projects = document.querySelectorAll('.project');
+    const revealOnScroll = ()=>{
+      projects.forEach(p=>{
+        const rect = p.getBoundingClientRect();
+        if(rect.top < window.innerHeight - 50){
+          p.classList.add('visible');
         }
       });
-    }, {threshold: 0.2});
-
-    document.querySelectorAll('.skill-card, #aboutSection, .project-card').forEach(el => observer.observe(el));
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
   </script></body>
 </html>
