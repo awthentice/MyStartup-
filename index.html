@@ -1,138 +1,240 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Startup</title>
   <style>
-    /* Reset */
-    * {margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth;}
-    body {font-family: 'Segoe UI', sans-serif; background:#f5f5f5; color:#333; transition:background 0.5s, color 0.5s;}
-    a {text-decoration:none; color:inherit;}/* Header */
-header {position:sticky; top:0; z-index:1000; background:#fff; display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; box-shadow:0 2px 8px rgba(0,0,0,0.1); transition:background 0.5s, color 0.5s;}
-header h1 {font-size:1.5rem; font-weight:700;}
+    * { margin:0; padding:0; box-sizing:border-box; font-family:"Segoe UI",sans-serif; scroll-behavior:smooth;}
+    body { background:#f9f9f9; color:#333; transition: background 0.5s,color 0.5s;}
 
-/* Dark mode toggle */
-.switch {position:relative; display:inline-block; width:60px; height:30px;}
-.switch input {display:none;}
-.slider {position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#ccc; transition:.4s; border-radius:30px;}
-.slider:before {position:absolute; content:"☀️"; height:24px; width:24px; left:3px; bottom:3px; background:white; border-radius:50%; transition:.4s; display:flex; align-items:center; justify-content:center; font-size:14px;}
-input:checked + .slider {background:#444;}
-input:checked + .slider:before {transform:translateX(30px) rotate(360deg); content:"🌙";}
+    header {
+      position: sticky; top:0;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:1rem 2rem;
+      background:#fff;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);
+      z-index:1000;
+      transition: background 0.5s,color 0.5s;
+    }
+    header h1 { font-size:1.2rem; font-weight:bold; }
 
-/* Hero */
-.hero {height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:2rem; background:linear-gradient(-45deg,#7f5af0,#2cb67d,#0ea5e9,#ff5f9e); background-size:400% 400%; animation:gradient 12s ease infinite; color:white;}
-@keyframes gradient {0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}}
-.hero h2 {font-size:2.5rem; margin-bottom:1rem;}
-.hero p {font-size:1.2rem; margin-bottom:1.5rem;}
-.hero .cta {padding:0.8rem 1.6rem; background:white; color:#333; border-radius:50px; font-weight:bold; transition:transform .3s, background .3s;}
-.hero .cta:hover {transform:scale(1.1); background:#eee;}
-.typing {border-right:2px solid white; white-space:nowrap; overflow:hidden; animation:typing 4s steps(30,end) infinite alternate, blink .75s step-end infinite;}
-@keyframes typing {from {width:0} to {width:100%}}
-@keyframes blink {50% {border-color:transparent}}
+    /* Dark Mode */
+    body.dark { background:#111; color:#eee;}
+    body.dark header { background:#1a1a1a; color:#eee;}
 
-/* Profile */
-.profile {display:flex; flex-direction:column; align-items:center; padding:3rem 2rem;}
-.profile img {width:150px; height:150px; border-radius:50%; object-fit:cover; box-shadow:0 4px 12px rgba(0,0,0,0.2); transition:transform .3s;}
-.profile img:hover {transform:scale(1.1) rotate(5deg);}
-.about {max-width:600px; text-align:center; margin-top:1.5rem;}
+    .toggle-switch {
+      width:50px; height:25px; background:#ccc; border-radius:25px;
+      position:relative; cursor:pointer; transition:background 0.3s;
+    }
+    .toggle-switch .knob {
+      width:21px; height:21px; background:#fff; border-radius:50%;
+      position:absolute; top:2px; left:2px; transition:transform 0.3s,background 0.3s;
+    }
+    body.dark .toggle-switch { background:#444;}
+    body.dark .toggle-switch .knob { transform:translateX(25px); background:#ffeb3b;}
 
-/* Skills */
-.skills {padding:3rem 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:1rem;}
-.skill {background:white; padding:1rem; border-radius:12px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.1); transition:transform .3s, box-shadow .3s;}
-.skill:hover {transform:translateY(-5px); box-shadow:0 8px 20px rgba(0,0,0,0.15);}
-.skill span {font-size:1.5rem; display:block; margin-bottom:0.5rem;}
+    /* Animasi Fade In */
+    .fade-in {
+      opacity:0; transform:translateY(30px);
+      transition:opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.show {
+      opacity:1; transform:translateY(0);
+    }
 
-/* Projects */
-.projects {padding:3rem 2rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem;}
-.project {background:white; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1); transform:translateY(40px); opacity:0; transition:transform 1s ease, opacity 1s ease;}
-.project.visible {transform:translateY(0); opacity:1;}
-.project img {width:100%; height:180px; object-fit:cover;}
-.project .desc {padding:1rem;}
+    /* Hero + Parallax */
+    .hero {
+      position:relative;
+      text-align:center; padding:6rem 2rem;
+      background:linear-gradient(135deg,#4facfe,#00f2fe);
+      color:#fff; overflow:hidden;
+    }
+    body.dark .hero { background:linear-gradient(135deg,#232526,#414345);}
+    .hero::before {
+      content:"";
+      position:absolute; top:0; left:0; right:0; bottom:0;
+      background:url('https://www.transparenttextures.com/patterns/cubes.png');
+      opacity:0.2;
+      transform:translateY(0);
+      transition:transform 0.2s linear;
+    }
+    .hero-content {
+      position:relative; z-index:2;
+    }
+    .hero h2 { font-size:2.5rem; margin-bottom:1rem;}
+    .hero p { margin-bottom:1.5rem; font-size:1.1rem;}
+    .hero .cta {
+      padding:0.7rem 1.5rem; background:#fff; color:#333;
+      font-weight:bold; border:none; border-radius:6px; cursor:pointer;
+      transition:transform 0.3s;
+    }
+    .hero .cta:hover { transform:scale(1.05);}
 
-/* Contact */
-.contact {padding:3rem 2rem; text-align:center;}
-.wa-btn {padding:1rem 2rem; background:#25d366; color:white; font-weight:bold; border-radius:50px; display:inline-flex; align-items:center; gap:0.5rem; transition:transform .3s, box-shadow .3s;}
-.wa-btn:hover {transform:scale(1.1); box-shadow:0 6px 20px rgba(37,211,102,0.5);}
+    /* Profile & About */
+    .profile { text-align:center; padding:2rem;}
+    .profile img {
+      width:120px; height:120px; border-radius:50%;
+      object-fit:cover; margin-bottom:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    }
+    .profile h3 { font-size:1.5rem; margin-bottom:0.5rem;}
+    .profile p { max-width:600px; margin:0 auto; line-height:1.6;}
 
-/* Footer */
-footer {padding:1.5rem; text-align:center; background:#111; color:white;}
+    /* Skills */
+    .skills { padding:3rem 2rem; text-align:center;}
+    .skills h3 { font-size:1.6rem; margin-bottom:2rem;}
+    .skill-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:1rem;
+    }
+    .skill {
+      background:#fff; padding:1rem; border-radius:12px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.05);
+      transition:transform 0.3s,background 0.3s;
+    }
+    .skill span { font-size:2rem; display:block; margin-bottom:0.5rem;}
+    .skill:hover { transform:translateY(-5px);}
+    body.dark .skill { background:#1e1e1e;}
 
-/* Dark Mode */
-body.dark {background:#121212; color:#eee;}
-body.dark header {background:#1e1e1e; color:#eee;}
-body.dark .skill {background:#1e1e1e; color:#eee;}
-body.dark .project {background:#1e1e1e; color:#eee;}
-body.dark .about {color:#eee;}
+    /* Portfolio */
+    .portfolio { padding:3rem 2rem; text-align:center;}
+    .portfolio h3 { font-size:1.6rem; margin-bottom:2rem;}
+    .projects {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:1.5rem;
+    }
+    .project {
+      overflow:hidden; border-radius:12px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      transition:transform 0.3s;
+    }
+    .project img { width:100%; display:block; transition:transform 0.5s;}
+    .project:hover img { transform:scale(1.1);}
+    .project:hover { transform:translateY(-5px);}
 
-@media(max-width:768px){
-  .hero h2 {font-size:2rem;}
-  .profile img {width:120px; height:120px;}
-}
+    /* Features */
+    .features { padding:3rem 2rem; text-align:center;}
+    .features h3 { font-size:1.6rem; margin-bottom:2rem;}
+    .feature-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:1.5rem;
+    }
+    .feature {
+      background:#fff; padding:1.5rem; border-radius:12px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.05);
+      transition:transform 0.3s,background 0.3s;
+    }
+    .feature span { font-size:2rem; display:block; margin-bottom:0.5rem;}
+    .feature:hover { transform:translateY(-5px);}
+    body.dark .feature { background:#1e1e1e;}
 
+    /* Contact */
+    .contact { text-align:center; padding:3rem 2rem;}
+    .contact button {
+      padding:0.8rem 2rem; border:none; border-radius:8px;
+      background:#25D366; color:#fff; font-size:1rem; font-weight:bold;
+      cursor:pointer; transition:transform 0.3s;
+    }
+    .contact button:hover { transform:scale(1.05);}
+
+    /* Footer */
+    footer { text-align:center; padding:1rem; background:#f0f0f0; margin-top:3rem;}
+    body.dark footer { background:#1a1a1a; color:#aaa;}
   </style>
 </head>
 <body>
   <header>
     <h1>My Startup</h1>
-    <label class="switch">
-      <input type="checkbox" id="darkToggle">
-      <span class="slider"></span>
-    </label>
-  </header>  <!-- Hero -->  <section class="hero">
-    <h2 class="typing">Bangun Website Modern & Profesional 🚀</h2>
-    <p>Kami membantu bisnis Anda tampil online lebih cepat, responsif, dan elegan.</p>
-    <a href="#contact" class="cta">Buat Website Sekarang</a>
-  </section>  <!-- Profile -->  <section class="profile" id="about">
+    <div class="toggle-switch" id="darkToggle"><div class="knob"></div></div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero fade-in" id="hero">
+    <div class="hero-content">
+      <h2>Solusi Website Modern</h2>
+      <p>Kami membantu bisnis Anda tampil profesional dengan website cepat, aman, dan gratis hosting di GitHub Pages.</p>
+      <button class="cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hubungi Kami</button>
+    </div>
+  </section>
+
+  <!-- Profile & About -->
+  <section class="profile fade-in">
     <img src="https://via.placeholder.com/150" alt="Foto Profil">
-    <div class="about">
-      <h2>Tentang Saya</h2>
-      <p>Saya seorang Web Developer yang fokus membangun website modern, responsif, dan menarik dengan teknologi terbaru.</p>
+    <h3>Tentang Saya</h3>
+    <p>Saya adalah seorang web developer yang fokus pada pembuatan website modern, responsif, dan cepat. Siap membantu Anda membangun kehadiran digital yang profesional.</p>
+  </section>
+
+  <!-- Skills -->
+  <section class="skills fade-in">
+    <h3>Keahlian</h3>
+    <div class="skill-grid">
+      <div class="skill"><span>💻</span><h4>HTML</h4></div>
+      <div class="skill"><span>🎨</span><h4>CSS</h4></div>
+      <div class="skill"><span>⚙️</span><h4>JavaScript</h4></div>
+      <div class="skill"><span>📱</span><h4>Responsive Design</h4></div>
     </div>
-  </section>  <!-- Skills -->  <section class="skills" id="skills">
-    <div class="skill"><span>📄</span>HTML</div>
-    <div class="skill"><span>🎨</span>CSS</div>
-    <div class="skill"><span>⚡</span>JavaScript</div>
-    <div class="skill"><span>⚛️</span>React</div>
-    <div class="skill"><span>🌿</span>Node.js</div>
-    <div class="skill"><span>🐘</span>PostgreSQL</div>
-  </section>  <!-- Projects -->  <section class="projects" id="projects">
-    <div class="project">
-      <img src="https://via.placeholder.com/600x400" alt="Proyek 1">
-      <div class="desc">
-        <h3>Proyek 1</h3>
-        <p>Website dashboard analytics modern dengan data interaktif.</p>
-      </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section class="portfolio fade-in">
+    <h3>Portfolio</h3>
+    <div class="projects">
+      <div class="project"><img src="https://via.placeholder.com/400x250" alt="Proyek 1"></div>
+      <div class="project"><img src="https://via.placeholder.com/400x250" alt="Proyek 2"></div>
     </div>
-    <div class="project">
-      <img src="https://via.placeholder.com/600x400" alt="Proyek 2">
-      <div class="desc">
-        <h3>Proyek 2</h3>
-        <p>Website e-commerce responsif dengan integrasi pembayaran.</p>
-      </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features fade-in">
+    <h3>Fitur Website Kami</h3>
+    <div class="feature-grid">
+      <div class="feature"><span>⚡</span><h4>Cepat & Ringan</h4><p>Website cepat diakses tanpa loading lama.</p></div>
+      <div class="feature"><span>📱</span><h4>Responsive</h4><p>Tampilan cocok di HP & desktop.</p></div>
+      <div class="feature"><span>🎨</span><h4>Desain Modern</h4><p>Tampilan elegan dan profesional.</p></div>
+      <div class="feature"><span>🔒</span><h4>Aman</h4><p>Hosting terpercaya di GitHub Pages.</p></div>
+      <div class="feature"><span>🚀</span><h4>SEO Friendly</h4><p>Mudah ditemukan di mesin pencari.</p></div>
+      <div class="feature"><span>💰</span><h4>Gratis Hosting</h4><p>Tanpa biaya bulanan untuk website Anda.</p></div>
     </div>
-  </section>  <!-- Contact -->  <section class="contact" id="contact">
-    <h2>Hubungi Saya</h2>
-    <a href="https://wa.me/6282124643404" target="_blank" class="wa-btn">💬 Chat via WhatsApp</a>
-  </section>  <!-- Footer -->  <footer>
-    © 2025 All Rights Reserved
-  </footer>  <script>
-    // Dark Mode Toggle
+  </section>
+
+  <!-- Contact -->
+  <section class="contact fade-in" id="contact">
+    <h3>Hubungi Saya</h3>
+    <p>Siap untuk bekerja sama? Klik tombol di bawah untuk langsung chat WhatsApp.</p>
+    <button onclick="window.location.href='https://wa.me/6282124643404'">💬 Chat via WhatsApp</button>
+  </section>
+
+  <footer>© 2025 My Startup. All rights reserved.</footer>
+
+  <script>
+    // Dark Mode
     const toggle = document.getElementById('darkToggle');
-    toggle.addEventListener('change', ()=>{
+    toggle.addEventListener('click', () => {
       document.body.classList.toggle('dark');
     });
 
-    // Scroll Reveal for Projects
-    const projects = document.querySelectorAll('.project');
-    const revealOnScroll = ()=>{
-      projects.forEach(p=>{
-        const rect = p.getBoundingClientRect();
-        if(rect.top < window.innerHeight - 50){
-          p.classList.add('visible');
+    // Animasi Scroll Fade In
+    const faders = document.querySelectorAll('.fade-in');
+    const options = { threshold: 0.2 };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
         }
       });
-    }
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll();
-  </script></body>
+    }, options);
+
+    faders.forEach(el => observer.observe(el));
+
+    // Parallax Hero
+    window.addEventListener('scroll', () => {
+      const hero = document.querySelector('.hero::before'); // CSS pseudo ga bisa langsung
+      const heroSection = document.querySelector('.hero');
+      let offset = window.scrollY * 0.4;
+      heroSection.style.backgroundPositionY = offset + "px";
+    });
+  </script>
+</body>
 </html>
